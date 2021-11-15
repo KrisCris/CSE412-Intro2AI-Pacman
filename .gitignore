@@ -1,0 +1,8 @@
+venv
+.idea
+.svn
+email.txt
+pleasegrade.txt
+codename.txt
+partners.txt
+*.pyc
