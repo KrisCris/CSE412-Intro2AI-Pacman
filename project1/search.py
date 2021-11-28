@@ -84,12 +84,6 @@ class Node(object):
     def __str__(self):
         return "[" + str(self._state) + "]"
 
-    # def __eq__(self, other):
-    #     if isinstance(other, Node):
-    #         if self._state == other._state and self._cost == other._cost and self._direction == other._direction and str(self._parent) == str(other._parent):
-    #             return True
-    #     return False
-
     def trace(self):
         route = ""
         this = self
@@ -135,46 +129,48 @@ class Node(object):
         return cost
 
 
-def genericSearch(problem, container):
-    # keep track of already expanded states
-    expanded = []
+# i don't use this methods anymore... see search()
+# def genericSearch(problem, container):
+#     # keep track of already expanded states
+#     expanded = []
 
-    # init state
+#     # init state
 
-    parent = Node(state=problem.getStartState(), direction=None, cost=None, parent=None)
+#     parent = Node(state=problem.getStartState(), direction=None, cost=None, parent=None)
 
-    while True:
-        # print parent.trace()
-        # check goal state
-        if problem.isGoalState(parent.getState()):
-            return parent.getActions()
+#     while True:
+#         # print parent.trace()
+#         # check goal state
+#         if problem.isGoalState(parent.getState()):
+#             return parent.getActions()
 
-        # expanding
-        states = problem.getSuccessors(parent.getState())
-        # mark parent node as expanded
-        expanded.append(parent.getState())
+#         # expanding
+#         states = problem.getSuccessors(parent.getState())
+#         # mark parent node as expanded
+#         expanded.append(parent.getState())
 
-        # if no solution
-        if len(states) == 0 and container.isEmpty():
-            print "No feasible solution."
-            return None
+#         # if no solution
+#         if len(states) == 0 and container.isEmpty():
+#             print "No feasible solution."
+#             return None
 
-        # each sub-node
-        for state, direction, cost in states:
-            # skip expanded node (parent of some nodes)
-            if state in expanded:
-                continue
+#         # each sub-node
+#         for state, direction, cost in states:
+#             # skip expanded node (parent of some nodes)
+#             if state in expanded:
+#                 continue
 
-            # warp newly generated state as Node
-            node = Node(state=state, direction=direction, cost=cost, parent=parent)
-            # push to stack/queue, or some appropriate data structure
-            container.push(node)
+#             # warp newly generated state as Node
+#             node = Node(state=state, direction=direction, cost=cost, parent=parent)
+#             # push to stack/queue, or some appropriate data structure
+#             container.push(node)
 
-        # pop nodes of states been regenerated and expanded (When re-generation is allowed)
-        while parent.getState() in expanded:
-            parent = container.pop()
+#         # pop nodes of states been regenerated and expanded (When re-generation is allowed)
+#         while parent.getState() in expanded:
+#             parent = container.pop()
 
 
+# implementation of exactly the pseudo code in course slides
 def search(problem, container):
     expanded_states = []
     container.push(Node(state=problem.getStartState(), direction=None, cost=None, parent=None))
